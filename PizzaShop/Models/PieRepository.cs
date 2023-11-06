@@ -2,8 +2,10 @@
 {
     public class PieRepository : IPieRepository
     {
-        public List<Pie> AllPies { get; set; }
-
+        public List<Pie> AllPies 
+        {
+           get { return privatePies; }
+        }
         public Pie GetPieById(int pieId)
         {
             foreach (var Pie in privatePies) 
