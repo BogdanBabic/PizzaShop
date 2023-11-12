@@ -8,5 +8,6 @@
         public double Price {  get; set; }
         public bool IsPieOfTheWeek { get; set; }
         public bool InStock { get; set; }
+        public Category Category { get; set; }
     }
 }
