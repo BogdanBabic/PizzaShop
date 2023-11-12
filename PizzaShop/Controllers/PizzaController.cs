@@ -10,16 +10,27 @@ namespace PizzaShop.Controllers
         {
             _repository = repository;
         }
-        public ViewResult List()
+        public ViewResult List(int? categoryId)
         {
-            return View(_repository.AllPies);
+            var allPies = _repository.AllPies;
+
+            if (categoryId > 0)
+            {
+                allPies = allPies.Where(pie => pie.Category.CategoryID == categoryId).ToList();
+
+                return View(allPies);
+            }
+
+            //else if (categoryId < 0 || categoryId > 3)
+            //{
+            //    return NotFound();
+            //}
+
+            else
+            {
+                return View(_repository.AllPies);
+            }
         }
-        public IActionResult Index()
-        {
-            ViewBag.Message = "Ovo je server-side poruka";
-            ViewBag.Message2 = "Još jedna server-side poruka";
-            ViewBag.Uslov = true;
-            return View();
-        }
+
     }
 }
