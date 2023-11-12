@@ -10,3 +10,78 @@
         </div>
     }
 </div>
+
+<div class="container">
+    <h2 style="text-align: center">
+        Sve pite u ponudi
+    </h2>
+
+    <div class="row">
+        <table border="1">
+            @foreach (var pie in Model)
+            {
+                <div class="col-xl-4 mb-5">
+                    <div class="card">
+                        <img class="card-img-top" src="#" alt="Slika pite">
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                @pie.Name
+                            </h4>
+                            <p class="card-text">
+                                @pie.PieID
+                            </p>
+                            <p class="card-text">
+                                @pie.Description
+                            </p>
+                            <p class="card-text">
+                                @pie.Price
+                            </p>
+                            <p class="card-text">
+                                @if (pie.IsPieOfTheWeek == true)
+                                {
+                                    <span>
+                                        <b>
+                                            Pita Nedelje!!!
+                                        </b>                                    
+                                    </span>
+                                }
+                            </p>
+                            <p class="card-text">
+                                @if (pie.InStock == false)
+                                {
+                                    <span>
+                                        <strong>
+                                            Nema na stanju!!!
+                                        </strong>
+                                    </span>
+                                }
+                            </p>
+                            <p class="card-text">
+                                @switch (pie.Category.CategoryID)
+                                {
+                                    case 1:
+                                        <span>
+                                            Pita sa mesom
+                                        </span>
+                                        break;
+                                    case 2:
+                                        <span>
+                                            Veganska pita
+                                        </span>
+                                        break;
+                                    case 3:
+                                        <span>
+                                            Pita bez glutena
+                                        </span>
+                                    default:
+                                        break;
+                                        //Znam da je moglo i sa if, ali sam hteo da iskoristim switch jer mi je delovalo izazovnije i lepse
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </table>
+    </div>
+</div>
