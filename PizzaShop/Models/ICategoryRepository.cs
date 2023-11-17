@@ -1,6 +1,6 @@
 ﻿namespace PizzaShop.Models
 {
-    public interface IcategoryRepository
+    public interface ICategoryRepository
     {
         IEnumerable<Category> Categories { get; }
 

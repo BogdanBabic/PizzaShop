@@ -1,31 +1,45 @@
-﻿//namespace PizzaShop.Models
-//{
-//    public class CategoryRepository : IcategoryRepository
-//    {
-//        public IEnumerable<Category> Categories { get; }
+﻿using System.Security.Cryptography.Xml;
 
-//        public Category GetCategoryById(int categoryId)
-//        {
-//            foreach (var category in Categories)
-//            {
-//                if (category.CategoryID == categoryId)
-//                {
-//                    return category;
-//                }
-//            }
-//            return null;
-//        }
-//        private List<Category> allCategories = new List<Category>();
+namespace PizzaShop.Models
+{
+    public class CategoryRepository : ICategoryRepository
+    {
+        public IEnumerable<Category> Categories { get; }
+        private List<Category> _categories = new List<Category>();
 
-//        public CategoryRepository()
-//        {
-//            Category category1 = new Category(1, "Pice sa mesom", "Description");
-//            Category category2 = new Category(2, "Veganske pice", "Description");
-//            Category category3 = new Category(3, "Pice bez glutena", "Description");
 
-//            allCategories.Add(category1);
-//            allCategories.Add(category2);
-//            allCategories.Add(category3);
-//        }
-//    }
-//}
+        public CategoryRepository()
+        {
+            //Category c1 = new Category { CategoryId = 1, CategoryName = "Pice sa mesom", CategoryDescription = "Opis za prvu kategoriju" };
+            //Category c2 = new Category { CategoryId = 2, CategoryName = "Veganske pice", CategoryDescription = "Opis za drugu kategoriju" };
+            //Category c3 = new Category { CategoryId = 3, CategoryName = "Pice bez glutena", CategoryDescription = "Opis za trecu kategoriju" };
+            //_categories.Add(c1);
+            //_categories.Add(c2);
+            //_categories.Add(c3);
+        }
+
+        public List<Category> GetCategories()
+        {
+            return _categories;
+        }
+
+        public Category GetCategoryById(int categoryId)
+        {
+            foreach (var category in Categories)
+            {
+                if (category.CategoryId == categoryId)
+                {
+                    return category;
+                }
+
+            }
+
+            return null;
+        }
+
+        public Category GetCategoryByID(int id)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

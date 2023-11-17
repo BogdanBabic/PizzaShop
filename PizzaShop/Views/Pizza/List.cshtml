@@ -1,17 +1,8 @@
-﻿@model IEnumerable<Pie>
+﻿@model IEnumerable<Pizza>
 
-<div>
-    @foreach (var p in Model)
-    {
-        <div>
-            <h2>@p.Name</h2>
-            <br>
-            <h4>@p.Description</h4>
-        </div>
-    }
-</div>
 
-<div class="container">
+@* <div class="container">
+    <p style="text-decoration-color: red">@ViewBag.ErrorMessage</p>
 
     <form action="@Url.Action("List")" method="get">
         <input type="text" name="categoryID" placeholder="Category ID" />
@@ -91,4 +82,4 @@
             }
         </table>
     </div>
-</div>
+</div> *@
