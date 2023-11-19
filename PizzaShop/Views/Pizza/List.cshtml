@@ -1,7 +1,19 @@
 ﻿@model IEnumerable<Pizza>
 
+    <body>
+        <div>
+        @foreach(var p in Model)
+        {
+            <h2>
+                <a href="#">
+                    @p.Name
+                </a>
+            </h2>
+        }
+        </div>
+    </body>
 
-@* <div class="container">
+<div class="container">
     <p style="text-decoration-color: red">@ViewBag.ErrorMessage</p>
 
     <form action="@Url.Action("List")" method="get">
@@ -19,26 +31,26 @@
             {
                 <div class="col-xl-4 mb-5">
                     <div class="card">
-                        <img class="card-img-top" src="#" alt="Slika pite">
+                        <img class="card-img-top" src="@pie.ImageUrl" alt="Slika pizze">
                         <div class="card-body">
                             <h4 class="card-title">
                                 @pie.Name
                             </h4>
                             <p class="card-text">
-                                @pie.PieID
+                                @pie.ID
                             </p>
                             <p class="card-text">
-                                @pie.Description
+                                @pie.ShortDescription
                             </p>
                             <p class="card-text">
                                 @pie.Price
                             </p>
                             <p class="card-text">
-                                @if (pie.IsPieOfTheWeek == true)
+                                @if (pie.IsPizzaOfTheWeek == true)
                                 {
                                     <span>
                                         <b>
-                                            Pita Nedelje!!!
+                                            Pizza Nedelje!!!
                                         </b>                                    
                                     </span>
                                 }
@@ -54,21 +66,21 @@
                                 }
                             </p>
                             <p class="card-text">
-                                @switch (pie.Category.CategoryID)
+                                @switch (pie.Category.CategoryId)
                                 {
                                     case 1:
                                         <span>
-                                            Pita sa mesom
+                                            Pizza sa mesom
                                         </span>
                                         break;
                                     case 2:
                                         <span>
-                                            Veganska pita
+                                            Veganska pizza
                                         </span>
                                         break;
                                     case 3:
                                         <span>
-                                            Pita bez glutena
+                                            Pizza bez glutena
                                         </span>
                                         break;
                                     default:
@@ -82,4 +94,4 @@
             }
         </table>
     </div>
-</div> *@
+</div>

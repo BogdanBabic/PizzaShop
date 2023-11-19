@@ -32,6 +32,11 @@ namespace PizzaShop.Controllers
                 return View(_repository.Pizzas);
             }
         }
+        public ViewResult Details(int id)
+        {
+            Pizza p = _repository.GetPizzaById(id);
+            return View(p);
+        }
 
     }
 }

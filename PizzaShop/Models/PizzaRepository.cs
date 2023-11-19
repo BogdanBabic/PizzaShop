@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
 namespace PizzaShop.Models
 {
     public class PizzaRepository : IPizzaRepository
@@ -11,14 +12,14 @@ namespace PizzaShop.Models
 
         public Pizza GetPizzaById(int id)
         {
-            return _applicationDbContext.Pizzas.FirstOrDefault(p => p.ID == id);
+            return _applicationDbContext.Pizzas.Include(p => p.Category).FirstOrDefault(p => p.ID == id);
         }
 
         public IEnumerable<Pizza> Pizzas
         {
             get
             {
-                return _applicationDbContext.Pizzas;
+                return _applicationDbContext.Pizzas.Include(p=>p.Category);
             }
         }
     }
