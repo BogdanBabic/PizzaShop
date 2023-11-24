@@ -19,7 +19,7 @@ namespace PizzaShop.Models
         {
             get
             {
-                return _applicationDbContext.Pizzas.Include(p=>p.Category);
+                return _applicationDbContext.Pizzas.Include(p => p.Category);
             }
         }
     }

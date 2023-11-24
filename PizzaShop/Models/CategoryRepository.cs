@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography.Xml;
+﻿using System.Diagnostics.Eventing.Reader;
+using System.Security.Cryptography.Xml;
 
 namespace PizzaShop.Models
 {
@@ -22,6 +23,7 @@ namespace PizzaShop.Models
         {
             return _categories;
         }
+ 
 
         public Category GetCategoryById(int categoryId)
         {
