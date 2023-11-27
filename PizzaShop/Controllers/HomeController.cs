@@ -12,6 +12,7 @@ namespace PizzaShop.Controllers
         public HomeController(ILogger<HomeController> logger, IPizzaRepository pizzaRepository)
         {
             _logger = logger;
+            _pizzaRepository = pizzaRepository;
         }
 
         public IActionResult Index() 
