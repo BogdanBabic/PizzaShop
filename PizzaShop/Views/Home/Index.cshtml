@@ -1,4 +1,8 @@
-﻿﻿<div id="welcomeCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+﻿@using PizzaShop.ViewModels;
+
+@model HomeViewModel
+
+﻿<div id="welcomeCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#welcomeCarousel" data-bs-slide-to="0" class="active"
                 aria-current="true" aria-label="Welcome 1"></button>
@@ -94,7 +98,16 @@
     </div>
 </div>
 
-<div class="container history">
+<div class="row pizzas-of-the-week">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var pizza in Model.PizzasOfTheWeek)
+        {
+            <partial name="_PizzaCard" model="pizza" />
+        }
+    </div>
+</div>
+
+@* <div class="container history">
     <h2 class="pb-4 mb-2 mt-5">Pice nedelje</h2>
     <div class="row row-cols-1 row-cols-lg-2 row-cols-xxl-3 g-4">
         <div class="col">
@@ -137,4 +150,4 @@
         </div>
 
     </div>
-</div>
+</div> *@
