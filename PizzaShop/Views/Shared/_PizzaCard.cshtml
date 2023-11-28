@@ -2,21 +2,19 @@
 
 <div class="col">
     <div class="card pizza-card">
-        <img src="@Url.Content(Model.ImageThumbnailUrl)" class="card-img-top" alt="@Model.Name" style="height:200px">
-        <div class="card-body pizza-button">
-            <h4 class="d-grid">
+        <img class="card-img-top" src="@Url.Content(Model.ImageThumbnailUrl)" alt="@Model.Name">
+        <div class="card-body">
+            <h4 class="card-title">
+                @Model.Name
             </h4>
-            <div class="d-flex justify-content-between mt-2">
-                <h2 class="text-start">
-                    @Model.Name
-                </h2>
-                <a asp-controller="Pizza"
-                   asp-action="Details"
-                   asp-route-id="@Model.ID"
-                   class="btn btn-primary">Detalji</a>
-                <h5 class="text-nowrap">
-                    @Model.Price.ToString("c")
-                </h5>
+            <p class="card-text">
+                @Model.ShortDescription
+            </p>
+            <a asp-controller="Pizza"
+               asp-action="Details"
+               asp-route-id="@Model.ID" class="btn btn-primary">Detalji</a>
+            <div class="card-footer">
+                @Model.Price RSD
             </div>
         </div>
     </div>

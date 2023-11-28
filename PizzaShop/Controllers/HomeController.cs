@@ -21,6 +21,11 @@ namespace PizzaShop.Controllers
             return View(new HomeViewModel(pizzasOfTheWeek));
         }
 
+        public IActionResult Pretplata()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
