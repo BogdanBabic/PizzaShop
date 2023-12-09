@@ -2,8 +2,8 @@
 {
     public interface IPizzaRepository
     {
-        Pizza GetPizzaById(int id);
-
         IEnumerable<Pizza> Pizzas { get; }
+
+        Pizza GetPizzaById(int id);
     }
 }

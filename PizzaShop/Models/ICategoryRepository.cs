@@ -1,4 +1,4 @@
-﻿namespace PizzaShop.Models
+﻿    namespace PizzaShop.Models
 {
     public interface ICategoryRepository
     {
