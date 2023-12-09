@@ -30,11 +30,6 @@ namespace PizzaShop.Controllers
             return View();
         }
 
-        //public IActionResult ShoppingCart()
-        //{
-        //    var shoppingCartItemRepository = _shoppingCartItemRepository.GetShoppingCartItemById("");
-        //    return View();
-        //}
         public IActionResult Privacy()
         {
             return View();

@@ -36,7 +36,7 @@ namespace PizzaShop.Controllers
             return RedirectToAction("Index");
         }
 
-        public RedirectToActionResult RemoveFromShoppingCart (int pizzaId)
+        public RedirectToActionResult RemoveFromShoppingCart(int pizzaId)
         {
             var selectedPizza = _pizzaRepository.GetPizzaById(pizzaId);
 
@@ -44,6 +44,13 @@ namespace PizzaShop.Controllers
             {
                 _shoppingCart.RemoveFromCart(selectedPizza);
             }
+            return RedirectToAction("Index");
+        }
+
+        public RedirectToActionResult ClearCart()
+        {
+            _shoppingCart.ClearCart();
+
             return RedirectToAction("Index");
         }
     }

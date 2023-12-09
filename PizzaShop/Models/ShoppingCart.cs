@@ -39,7 +39,7 @@ namespace PizzaShop.Models
         {
             var shoppingCartItem = _context.ShoppingCartItems.SingleOrDefault(s => s.Pizza.ID == pizza.ID && s.ShoppingCartId == ShoppingCartId);
 
-            if (shoppingCartItem != null)
+            if (shoppingCartItem == null)
             {
                 shoppingCartItem = new ShoppingCartItem
                 {
@@ -91,6 +91,15 @@ namespace PizzaShop.Models
             var total = _context.ShoppingCartItems.Where(c => c.ShoppingCartId == ShoppingCartId).Select(c => c.Pizza.Price * c.Amount).Sum();
 
             return total;
+        }
+
+        public void ClearCart()
+        {
+            var cartItems = _context.ShoppingCartItems.Where(c => c.ShoppingCartId == ShoppingCartId);
+
+            _context.ShoppingCartItems.RemoveRange(cartItems);
+
+            _context.SaveChanges();
         }
     }
 }
