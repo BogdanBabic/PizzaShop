@@ -37,9 +37,9 @@
                                 Pice
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="nav-dropdown">
-                                <li><a class="dropdown-item" href="samesom.html">Pice sa mesom</a></li>
-                                <li><a class="dropdown-item" href="veganske.html">Veganske pice</a></li>
-                                <li><a class="dropdown-item" href="bezglutena.html">Pice bez glutena</a></li>
+                                <li><a class="dropdown-item" asp-controller="Pizza" asp-action="List" asp-route-CategoryId="1">Pice sa mesom</a></li>
+                                <li><a class="dropdown-item" asp-controller="Pizza" asp-action="List" asp-route-CategoryId="2">Veganske pice</a></li>
+                                <li><a class="dropdown-item" asp-controller="Pizza" asp-action="List" asp-route-CategoryId="3">Pice bez glutena</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
@@ -53,7 +53,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="kontakt.html">Kontakt</a>
+                            <a class="nav-link" asp-controller="Contact" asp-action="Index">Kontakt</a>
                         </li>
                     </ul>
                 </div>

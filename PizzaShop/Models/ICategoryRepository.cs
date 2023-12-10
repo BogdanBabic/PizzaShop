@@ -2,8 +2,8 @@
 {
     public interface ICategoryRepository
     {
-        IEnumerable<Category> Categories { get; }
+        List<Category> GetAllCategories();
 
-        Category GetCategoryByID(int id);
+        Category GetCategoryById(int id);
     }
 }

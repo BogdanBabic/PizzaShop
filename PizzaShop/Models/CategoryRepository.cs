@@ -11,19 +11,14 @@ namespace PizzaShop.Models
 
         public CategoryRepository()
         {
-            //Category c1 = new Category { CategoryId = 1, CategoryName = "Pice sa mesom", CategoryDescription = "Opis za prvu kategoriju" };
-            //Category c2 = new Category { CategoryId = 2, CategoryName = "Veganske pice", CategoryDescription = "Opis za drugu kategoriju" };
-            //Category c3 = new Category { CategoryId = 3, CategoryName = "Pice bez glutena", CategoryDescription = "Opis za trecu kategoriju" };
-            //_categories.Add(c1);
-            //_categories.Add(c2);
-            //_categories.Add(c3);
+           
         }
 
-        public List<Category> GetCategories()
+        public List<Category> GetAllCategories()
         {
             return _categories;
         }
- 
+
 
         public Category GetCategoryById(int categoryId)
         {
@@ -37,11 +32,6 @@ namespace PizzaShop.Models
             }
 
             return null;
-        }
-
-        public Category GetCategoryByID(int id)
-        {
-            throw new NotImplementedException();
         }
     }
 }
