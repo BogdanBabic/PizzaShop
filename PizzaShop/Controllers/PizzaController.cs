@@ -10,12 +10,13 @@ namespace PizzaShop.Controllers
         private readonly IPizzaRepository _repository;
         private readonly ICategoryRepository _categoryRepository;
 
-        public PizzaController(IPizzaRepository repository)
+        public PizzaController(IPizzaRepository repository, ICategoryRepository categoryRepository)
         {
             _repository = repository;
+            _categoryRepository = categoryRepository;
         }
 
-        public ViewResult List(int? categoryId)
+        public ViewResult List(int categoryId)
         {
             IEnumerable<Pizza> pizzas;
             string? category = "Sve Pice";

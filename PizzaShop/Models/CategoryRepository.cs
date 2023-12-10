@@ -5,33 +5,21 @@ namespace PizzaShop.Models
 {
     public class CategoryRepository : ICategoryRepository
     {
-        public IEnumerable<Category> Categories { get; }
-        private List<Category> _categories = new List<Category>();
+        private readonly ApplicationDbContext _context;
 
-
-        public CategoryRepository()
+        public CategoryRepository(ApplicationDbContext context)
         {
-           
+            _context = context;
         }
 
         public List<Category> GetAllCategories()
         {
-            return _categories;
+            return _context.Categories.ToList();
         }
 
-
-        public Category GetCategoryById(int categoryId)
+        public Category GetCategoryById(int? categoryId)
         {
-            foreach (var category in Categories)
-            {
-                if (category.CategoryId == categoryId)
-                {
-                    return category;
-                }
-
-            }
-
-            return null;
+            return _context.Categories.FirstOrDefault(c => c.CategoryId == categoryId)!;
         }
     }
 }

@@ -4,6 +4,6 @@
     {
         List<Category> GetAllCategories();
 
-        Category GetCategoryById(int id);
+        Category GetCategoryById(int? categoryId);
     }
 }

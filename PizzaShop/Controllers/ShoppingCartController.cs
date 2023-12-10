@@ -33,6 +33,7 @@ namespace PizzaShop.Controllers
             {
                 _shoppingCart.AddToCart(selectedPizza);
             }
+
             return RedirectToAction("Index");
         }
 
