@@ -1,4 +1,6 @@
-﻿namespace PizzaShop.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PizzaShop.Models
 {
     public class ShoppingCartItem
     {

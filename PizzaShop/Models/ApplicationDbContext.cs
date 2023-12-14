@@ -6,6 +6,7 @@ namespace PizzaShop.Models
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
+
         }
 
         public DbSet<Pizza> Pizzas { get; set; }
