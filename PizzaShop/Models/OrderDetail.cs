@@ -10,9 +10,7 @@ namespace PizzaShop.Models
         public int PizzaId { get; set; }
         public int Amount { get; set; }
         public decimal Price { get; set; }
-        [ForeignKey("ID")]
         public Pizza Pizza { get; set; } = default!;
-        [ForeignKey("ID")]
         public Order Order { get; set; } = default!;
     }
 }

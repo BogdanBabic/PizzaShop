@@ -15,11 +15,6 @@ namespace PizzaShop.Models
             _context = context;
         }
 
-        //public IEnumerable<ShoppingCartItem> GetShoppingCartItemById(string shoppingCartItemId)
-        //{
-        //    return _applicationDbContext.ShoppingCartItems.Include(s => s.Pizza).Where(s => s.ShoppingCartId == shoppingCartItemId);
-        //}
-
         public static ShoppingCart GetCart(IServiceProvider services)
         {
             //Dovlaci sesiju korisnika, svaki korisnik ima svoju sesiju
