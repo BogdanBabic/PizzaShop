@@ -58,6 +58,7 @@ namespace PizzaShop.Models
             var shoppingCartItem = _context.ShoppingCartItems.SingleOrDefault(s => s.Pizza.ID == pizza.ID && s.ShoppingCartId == ShoppingCartId);
 
             var localAmount = 0;
+
             if (shoppingCartItem != null)
             {
                 if (shoppingCartItem.Amount > 1)
@@ -65,10 +66,10 @@ namespace PizzaShop.Models
                     shoppingCartItem.Amount--;
                     localAmount = shoppingCartItem.Amount;
                 }
-            }
-            else
-            {
-                _context.ShoppingCartItems.Remove(shoppingCartItem);
+                else
+                {
+                    _context.ShoppingCartItems.Remove(shoppingCartItem);
+                }
             }
 
             _context.SaveChanges(true);
