@@ -1,15 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace PizzaShop.Models
 {
-    public class Order
+    public class User
     {
-        [BindNever]
-        public int ID { get; set; }
+        public int UserId { get; set; }
 
+        [Display(Name = "Korisnicko ime")]
+        [Required(ErrorMessage = "Korisnicko ime je neispravno")]
+        [StringLength(20, ErrorMessage = "Korisnicko ime je predugacko")]
+        public string Username { get; set; }
 
-        public List<OrderDetail>? OrderDetails { get; set; } = default;
+        [Display(Name = "Sifra")]
+        [Required(ErrorMessage = "Sifra je obavezna")]
+        [StringLength(20, ErrorMessage = "Sifra ne sme imati vise od 20 karaktera")]
+        public string Password { get; set; }
 
         [Display(Name = "Ime")]
         [Required(ErrorMessage = "Ime je neispravno")]
@@ -36,21 +41,16 @@ namespace PizzaShop.Models
         [StringLength(50, ErrorMessage = "Naziv drzave je predugacak")]
         public string Country { get; set; }
 
-        [Display(Name = "Broj telefona")]
-        [RegularExpression(@"^\+?[\d ()-]{1,15}$", ErrorMessage = "Broj telefona je neispravan")]
-        [Required(ErrorMessage ="Broj telefona je obavezan!")]
-        [DataType(DataType.PhoneNumber)]
-        public string PhoneNumber { get; set; }
-
         [Display(Name = "Email adresa")]
+        [Required(ErrorMessage = "Email adresa je obavezna")]
         [StringLength(50, ErrorMessage = "Email adresa je predugacka")]
         [DataType(DataType.EmailAddress)]
-        public string? Email { get; set; }
+        public string Email { get; set; }
 
-        [BindNever]
-        public DateTime OrderPlaced { get; set; }
-
-        [BindNever]
-        public decimal OrderTotal { get; set; }
+        [Display(Name = "Broj telefona")]
+        [RegularExpression(@"^\+?[\d ()-]{1,15}$", ErrorMessage = "Broj telefona je neispravan")]
+        [Required(ErrorMessage = "Broj telefona je obavezan!")]
+        [DataType(DataType.PhoneNumber)]
+        public string PhoneNumber { get; set; }
     }
 }
