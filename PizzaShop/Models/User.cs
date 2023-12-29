@@ -45,7 +45,7 @@ namespace PizzaShop.Models
         [Required(ErrorMessage = "Email adresa je obavezna")]
         [StringLength(50, ErrorMessage = "Email adresa je predugacka")]
         [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         [Display(Name = "Broj telefona")]
         [RegularExpression(@"^\+?[\d ()-]{1,15}$", ErrorMessage = "Broj telefona je neispravan")]

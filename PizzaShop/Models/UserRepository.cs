@@ -9,29 +9,15 @@
         }
         public void CreateUser(User user)
         {
+            user.Password = EncryptionHelper.Encrypt(user.Password);
+
             _context.Users.Add(user);
             _context.SaveChanges();
         }
 
-        public bool IsExisting(string username)
+        public User GetUserByUsername(string username)
         {
-            if (_context.Users.FirstOrDefault(u => u.Username == username) == null)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        public bool IsPasswordOk(string password)
-        {
-            var inputPassword = 
-
-            if (_context.Users.FirstOrDefault(u => u.Password == inputPassword) == null)
-            {
-                return false;
-            }
-            return true;
+            return _context.Users.FirstOrDefault(u => u.Username == username)!;
         }
     }
 }

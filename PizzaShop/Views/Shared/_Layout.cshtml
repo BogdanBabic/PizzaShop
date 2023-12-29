@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http;
+@using Newtonsoft.Json;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -15,6 +19,15 @@
     <script src="~/lib/bootstrap/js/bootstrap.js"></script>
     <link rel="stylesheet" href="~/css/custom.css">
 </head>
+
+@{
+    var user = new User();
+    var userCookie = HttpContextAccessor.HttpContext!.Request.Cookies["User"];
+    if (userCookie != null)
+    {
+        user = JsonConvert.DeserializeObject<User>(userCookie!);
+    }
+}
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark bg-primary">
@@ -51,7 +64,22 @@
                         </li>
                     </ul>
                     <vc:shopping-cart-summary></vc:shopping-cart-summary>
+
                 </div>
+                @if (!string.IsNullOrEmpty(user!.Username))
+                {
+                    <div class="align-items-end">
+                        <a class="btn btn-outline-light me-2 log-in-btn" asp-controller="User" asp-action="Profile">@user.Username</a>
+                        <a class="btn btn-outline-light" asp-controller="User" asp-action="Logout">Izloguj se</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="align-items-end">
+                        <a class="btn btn-outline-light me-2 log-in-btn" asp-controller="User" asp-action="SignIn">Uloguj se</a>
+                        <a class="btn btn-outline-light" asp-controller="User" asp-action="Index">Registruj se</a>
+                    </div>
+                }
             </div>
         </nav>
 

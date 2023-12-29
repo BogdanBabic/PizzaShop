@@ -1,18 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using PizzaShop.Models;
 using PizzaShop.ViewModels;
+using System.Text.Json.Serialization;
 
 namespace PizzaShop.Controllers
 {
     public class UserController : Controller
     {
         private readonly IUserRepository _userRepository;
-        private readonly ApplicationDbContext _context;
 
-        public UserController(IUserRepository userRepository, ApplicationDbContext context)
+        public UserController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
-            _context = context;
 
         }
         public IActionResult Index()
@@ -34,38 +34,55 @@ namespace PizzaShop.Controllers
 
             var user = _userRepository.GetUserByUsername(loginUser.Username);
 
-            ModelState.AddModelError("", "Neispravni podaci");
+            if (user != null)
+            {
+                var isPasswordOk = EncryptionHelper.Encrypt(loginUser.Password) == user.Password ? true : false;
+
+                if (isPasswordOk)
+                {
+                    user.Password = "";
+                    var cookieOptions = new CookieOptions();
+                    cookieOptions.Expires = DateTime.Now.AddDays(1);
+                    var serializedUser = JsonConvert.SerializeObject(user);
+                    Response.Cookies.Append("User", serializedUser, cookieOptions);
+
+                    return View("SignInSuccess");
+                }
+            }
+
+            ModelState.AddModelError("", "Neispravni kredencijali");
 
             return View("Login", loginUser);
         }
 
-        public IActionResult SignInSuccess()
-        {
-            return View();
-        }
         public IActionResult Register(User registerUser)
         {
             if (ModelState.IsValid)
             {
-                var isExisting = _userRepository.IsExisting(registerUser.Username);
+                var user = _userRepository.GetUserByUsername(registerUser.Username);
 
-                if (isExisting)
+                if (user == null)
                 {
-                    ModelState.AddModelError("", "Korisnicko ime " + registerUser.Username + " vec postoji");
-
-                    return View("Index", registerUser);
+                    _userRepository.CreateUser(registerUser);
+                    return View("Success");
                 }
                 else
                 {
-                    _userRepository.CreateUser(registerUser);
-
-                    return View("Success");
+                    ModelState.AddModelError("", "Korisnicko ime " + registerUser.Username + " je zauzeto");
+                    return View("Index", registerUser);
                 }
             }
             else
             {
                 return View("Index", registerUser);
             }
+        }
+
+        public IActionResult Logout(LoginViewModel loginUser)
+        {
+            Response.Cookies.Delete("User");
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }
