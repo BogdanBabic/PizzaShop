@@ -52,5 +52,6 @@ namespace PizzaShop.Models
         [Required(ErrorMessage = "Broj telefona je obavezan!")]
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
+        public List<Order> Orders { get; set; }
     }
 }

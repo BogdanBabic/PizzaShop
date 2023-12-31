@@ -1,4 +1,6 @@
-﻿namespace PizzaShop.Models
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace PizzaShop.Models
 {
     public class UserRepository : IUserRepository
     {
@@ -18,6 +20,15 @@
         public User GetUserByUsername(string username)
         {
             return _context.Users.FirstOrDefault(u => u.Username == username)!;
+        }
+
+        public User GetUserById(int id)
+        {
+            return _context.Users
+                .Include(u => u.Orders)
+                .ThenInclude(o => o.OrderDetails)
+                .ThenInclude(od => od.Pizza)
+                .FirstOrDefault(u => u.UserId == id)!;
         }
     }
 }

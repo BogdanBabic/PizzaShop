@@ -25,6 +25,26 @@ namespace PizzaShop.Controllers
             return View(new LoginViewModel());
         }
 
+        public IActionResult Profile()
+        {
+            User user = new User();
+            var userCookie = HttpContext!.Request.Cookies["User"];
+
+            if (userCookie != null)
+            {
+                user = JsonConvert.DeserializeObject<User>(userCookie)!;
+            }
+
+            var dbUser = _userRepository.GetUserById(user.UserId);
+
+            var vm = new UpdateUserViewModel()
+            {
+                Id = user.UserId,
+                Username = user.Username
+            };
+
+            return View(vm);
+        }
         public IActionResult SignIn(LoginViewModel loginUser)
         {
             if (!ModelState.IsValid)
@@ -78,11 +98,18 @@ namespace PizzaShop.Controllers
             }
         }
 
-        public IActionResult Logout(LoginViewModel loginUser)
+        public IActionResult Logout()
         {
-            Response.Cookies.Delete("User");
+            if (Request.Cookies["User"] != null)
+            {
+                Response.Cookies.Delete("User");
 
-            return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }

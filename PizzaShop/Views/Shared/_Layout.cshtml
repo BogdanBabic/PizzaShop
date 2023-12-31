@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Http;
+﻿﻿@using Microsoft.AspNetCore.Http;
 @using Newtonsoft.Json;
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
@@ -28,6 +28,7 @@
         user = JsonConvert.DeserializeObject<User>(userCookie!);
     }
 }
+
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark bg-primary">
@@ -57,32 +58,25 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Contact" asp-action="Index">Kontakt</a>
+                            <a class="nav-link" style="margin-right: 500px" asp-controller="Contact" asp-action="Index">Kontakt</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="User" asp-action="Index">Registrujte se</a>
+                        <li class="nav-item d-flex flex-column flex-md-row">
+                            @if (!string.IsNullOrEmpty(user!.Username))
+                            {
+                                <a class="btn btn-outline-light me-2 log-in-btn" style="max-width: 100px" asp-controller="User" asp-action="Profile">@user.Username</a>
+                                <a class="btn btn-outline-light mt-3 mt-md-0 me-2" style="max-width: 100px" asp-controller="User" asp-action="Logout">Izloguj se</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-outline-light me-2 log-in-btn" style="max-width: 100px" asp-controller="User" asp-action="Login">Uloguj se</a>
+                                <a class="btn btn-outline-light mt-3 mt-md-0" style="max-width: 100px" asp-controller="User" asp-action="Index">Registruj se</a>
+                            }
                         </li>
                     </ul>
-                    <vc:shopping-cart-summary></vc:shopping-cart-summary>
-
                 </div>
-                @if (!string.IsNullOrEmpty(user!.Username))
-                {
-                    <div class="align-items-end">
-                        <a class="btn btn-outline-light me-2 log-in-btn" asp-controller="User" asp-action="Profile">@user.Username</a>
-                        <a class="btn btn-outline-light" asp-controller="User" asp-action="Logout">Izloguj se</a>
-                    </div>
-                }
-                else
-                {
-                    <div class="align-items-end">
-                        <a class="btn btn-outline-light me-2 log-in-btn" asp-controller="User" asp-action="SignIn">Uloguj se</a>
-                        <a class="btn btn-outline-light" asp-controller="User" asp-action="Index">Registruj se</a>
-                    </div>
-                }
+
             </div>
         </nav>
-
     </header>
 
     <div class="container">
