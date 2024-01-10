@@ -22,5 +22,11 @@ namespace PizzaShop.Models
                 return _applicationDbContext.Pizzas.Include(p => p.Category);
             }
         }
+
+        public void CreatePizza(Pizza pizza)
+        {
+            _applicationDbContext = Pizzas.Add(pizza);
+            _applicationDbContext.SaveChanges();
+        }
     }
 }

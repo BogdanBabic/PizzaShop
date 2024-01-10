@@ -35,8 +35,6 @@ namespace PizzaShop.Controllers
                 user = JsonConvert.DeserializeObject<User>(userCookie)!;
             }
 
-            var dbUser = _userRepository.GetUserById(user.UserId);
-
             var vm = new UpdateUserViewModel()
             {
                 Id = user.UserId,
@@ -110,6 +108,48 @@ namespace PizzaShop.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+        }
+
+        public IActionResult ChangePassword(UpdateUserViewModel model)
+        {
+            var user = _userRepository.GetUserById(model.Id);
+
+            if (model.ConfirmPassword == model.NewPassword)
+            {
+                _userRepository.UpdatePassword(user, model.NewPassword);
+                ViewBag.Message = "Uspesno ste promenili sifru!";
+            }
+            return View("Profile", model);
+        }
+
+        public IActionResult ChangeAddress(UpdateUserViewModel model)
+        {
+            var user = _userRepository.GetUserById(model.Id);
+            
+            if (model.CurrentPassword.Encrypt() == user.Password)
+            {
+                _userRepository.UpdateAddress(user, model.NewAddress);
+            }
+            else
+            {
+                ModelState.AddModelError("", "Uneta sifra se ne poklapa sa vasom sifrom");
+                return View("Profile", model);
+            }
+            return View("Profile");
+        }
+
+        public IActionResult OrderHistory(User user)
+        {
+            var userCookie = HttpContext!.Request.Cookies["User"];
+
+            if (userCookie != null)
+            {
+                user = JsonConvert.DeserializeObject<User>(userCookie)!;
+            }
+
+            var userOrders = _userRepository.GetUsersWithPizzasByUserId(user.UserId);
+
+            return View(userOrders);
         }
     }
 }

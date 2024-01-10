@@ -1,0 +1,77 @@
+﻿﻿@using PizzaShop.ViewModels;
+@using Microsoft.AspNetCore.Http;
+@using Newtonsoft.Json;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@model UpdateUserViewModel
+
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <h3 class="d-flex justify-content-center">Dobrodosao, @Model.Username</h3>
+        </div>
+    </div>
+</div>
+
+<form asp-controller="User" asp-action="ChangePassword" method="post" role="form">
+    <p class="my-3">
+        Za promenu sifre molimo Vas unesite da unesete novu sifru i potvrdu nove sifre.
+    </p>
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    @Html.HiddenFor(m => m.Id)
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <label asp-for="NewPassword" class="form-label"></label>
+                <input asp-for="NewPassword" type="password" class="form-control" />
+                <span asp-validation-for="NewPassword" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="ConfirmPassword" class="form-label"></label>
+                <input asp-for="ConfirmPassword" type="password" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="mt-2">
+                <div class="col-md-offset-2 col-md-5">
+                    <input type="submit" class="btn btn-secondary" value="Promeni sifru" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form asp-controller="User" asp-action="ChangeAddress" method="post" role="form">
+        <p class="mt-5 my-3">
+            Za promenu adrese molimo Vas unesite da unesete novu adresu i vasu sifru kao potvrdu.
+        </p>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <label asp-for="NewAddress" class="form-label"></label>
+                    <input asp-for="NewAddress" class="form-control" />
+                    <span asp-validation-for="NewAddress" class="text-danger"></span>
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="CurrentPassword" class="form-label"></label>
+                    <input asp-for="CurrentPassword" type="password" class="form-control" />
+                    <span asp-validation-for="CurrentPassword" class="text-danger"></span>
+                </div>
+                <div class="mt-2">
+                    <div class="col-md-offset-2 col-md-5">
+                        <input type="submit" class="btn btn-secondary" value="Promeni adresu" />
+                    </div>
+                </div>
+            </div>
+        </div>
+</form>
+
+<div class="container">
+    <div class="col-3">
+        <div class="text-center d-grid mt-4">
+            <a class="btn btn-secondary" asp-controller="User" asp-action="OrderHistory"><h4>Moje porudzbine</h4></a>
+        </div>
+    </div>
+</div>

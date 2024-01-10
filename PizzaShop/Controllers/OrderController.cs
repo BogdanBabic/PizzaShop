@@ -8,15 +8,18 @@ namespace PizzaShop.Controllers
     {
         private readonly IShoppingCart _shoppingCart;
         private readonly IOrderRepository _orderRepository;
+        private readonly IUserRepository _userRepository;
 
-        public OrderController(IShoppingCart shoppingCart, IOrderRepository orderRepository)
+        public OrderController(IShoppingCart shoppingCart, IOrderRepository orderRepository, IUserRepository userRepository)
         {
             _orderRepository = orderRepository;
             _shoppingCart = shoppingCart;
+            _userRepository = userRepository;
         }
         public IActionResult Checkout()
         {
             var userCookie = Request.Cookies["User"]!;
+
             if (userCookie == null)
             {
                 return RedirectToAction("Login", "User");
@@ -25,8 +28,7 @@ namespace PizzaShop.Controllers
 
             var vm = new Order();
 
-            if (user != null)
-            {
+                vm.UserId = user.UserId;
                 vm.Address = user.Address;
                 vm.PhoneNumber = user.PhoneNumber;
                 vm.City = user.City;
@@ -34,7 +36,7 @@ namespace PizzaShop.Controllers
                 vm.FirstName = user.FirstName;
                 vm.LastName = user.LastName;
                 vm.Email = user.Email;
-            }
+
 
             return View(vm);
         }

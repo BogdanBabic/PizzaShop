@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using PizzaShop.Models;
 using PizzaShop.ViewModels;
 using System.Runtime.CompilerServices;
@@ -9,11 +10,13 @@ namespace PizzaShop.Controllers
     {
         private readonly IPizzaRepository _repository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IUserRepository _userRepository;
 
-        public PizzaController(IPizzaRepository repository, ICategoryRepository categoryRepository)
+        public PizzaController(IPizzaRepository repository, ICategoryRepository categoryRepository, IUserRepository userRepository)
         {
             _repository = repository;
             _categoryRepository = categoryRepository;
+            _userRepository = userRepository;
         }
 
         public ViewResult List(int categoryId)
@@ -47,6 +50,28 @@ namespace PizzaShop.Controllers
             ViewBag.Uslov = false;
             ViewBag.Message = "Ovo je server-side poruka.";
             ViewBag.Message2 = "Ovo je druga poruka";
+            return View();
+        }
+        public IActionResult PizzaBuilder()
+        {
+            var vm = new UserPizzaViewModel();
+            return View(vm);
+        }
+
+        public IActionResult CreatePizza(UserPizzaViewModel model)
+        {
+            var userCookie = Request.Cookies["User"];
+            var user = JsonConvert.DeserializeObject<User>(userCookie!);
+            var pizza = new Pizza()
+            {
+                Name = model.Name,
+                Category = _categoryRepository.GetAllCategories().FirstOrDefault(c => c.Name == "Pizze korisnika"),
+                LongDescription = model.Ingredients,
+                Price = 1500,
+                CreatorId = user!.UserId
+            };
+
+            _repository.
             return View();
         }
     }

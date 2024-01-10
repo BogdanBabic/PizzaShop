@@ -14,14 +14,17 @@ namespace PizzaShop.ViewModels
         [Display(Name = "Trenutna sifra")]
         public string CurrentPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Unesite novu sifru")]
         [Display(Name = "Nova sifra")]
         public string NewPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Morate da potvrdite novu sifru")]
         [Display(Name = "Potvrdi novu sifru")]
         [Compare("NewPassword", ErrorMessage = "Uneta sifra se ne poklapa!")]
         public string ConfirmPassword { get; set; }
 
+        [Required(ErrorMessage = "Morate unetu novu adresu")]
+        [Display(Name = "Nova adresa")]
+        public string NewAddress { get; set; }
     }
 }

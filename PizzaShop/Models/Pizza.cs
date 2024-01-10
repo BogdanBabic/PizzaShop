@@ -13,6 +13,7 @@ namespace PizzaShop.Models
         public string? ImageThumbnailUrl {  get; set; }
         public bool? IsPizzaOfTheWeek { get; set; }
         public Category Category { get; set; }
+        public int? CreatorId { get; set; }
 
     }
 }

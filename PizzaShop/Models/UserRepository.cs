@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PizzaShop.ViewModels;
 
 namespace PizzaShop.Models
 {
@@ -22,13 +23,37 @@ namespace PizzaShop.Models
             return _context.Users.FirstOrDefault(u => u.Username == username)!;
         }
 
-        public User GetUserById(int id)
+        public User GetUserById(int userId)
+        {
+            return _context.Users.FirstOrDefault(u => u.UserId == userId)!;
+        }
+
+        public User GetUsersWithPizzasByUserId(int userId)
         {
             return _context.Users
-                .Include(u => u.Orders)
-                .ThenInclude(o => o.OrderDetails)
-                .ThenInclude(od => od.Pizza)
-                .FirstOrDefault(u => u.UserId == id)!;
+               .Include(u => u.Orders)
+               .ThenInclude(o => o.OrderDetails)
+               .ThenInclude(od => od.Pizza)
+               .FirstOrDefault(u => u.UserId == userId)!;
+        }
+
+        public void UpdatePassword(User user, string newPassword)
+        {
+            user.Password = EncryptionHelper.Encrypt(newPassword);
+            _context.Users.Update(user);
+            _context.SaveChanges();
+        }
+
+        public void UpdateAddress(User user, string newAddress)
+        {
+            user.Address = newAddress;
+            _context.Users.Update(user);
+            _context.SaveChanges();
+        }
+        
+        public void MakePizza(UserPizzaViewModel model)
+        {
+
         }
     }
 }

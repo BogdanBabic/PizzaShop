@@ -7,10 +7,11 @@ namespace PizzaShop.Models
     public class Order
     {
         [BindNever]
-        public int ID { get; set; }
+        public int Id { get; set; }
+        public int UserId { get; set; }
 
         [ForeignKey("UserId")]
-        public User User { get; set; }
+        public User? User { get; set; }
 
         public List<OrderDetail>? OrderDetails { get; set; } = default;
 
