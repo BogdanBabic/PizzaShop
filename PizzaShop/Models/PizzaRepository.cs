@@ -23,9 +23,9 @@ namespace PizzaShop.Models
             }
         }
 
-        public void CreatePizza(Pizza pizza)
+        public void SavePizza(Pizza pizza)
         {
-            _applicationDbContext = Pizzas.Add(pizza);
+            _applicationDbContext.Pizzas.Add(pizza);
             _applicationDbContext.SaveChanges();
         }
     }

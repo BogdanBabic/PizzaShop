@@ -19,21 +19,33 @@ namespace PizzaShop.Controllers
             _userRepository = userRepository;
         }
 
-        public ViewResult List(int categoryId)
+        public ViewResult List(int? categoryId)
         {
             IEnumerable<Pizza> pizzas;
-            string? category = "Sve Pice";
+            string category = "Sve pizze";
+
+            var categoryObj = _categoryRepository.GetCategoryById(categoryId);
+
+            if (categoryObj != null)
+            {
+                category = "Sve pizze";
+            }
+
+            if (category == "Sve pizze")
+            {
+                pizzas = _repository.Pizzas.OrderBy(p => p.ID).Where(c => c.CreatorId == null);
+            }
 
             if (categoryId > 0)
             {
                 pizzas = _repository.Pizzas.Where(p => p.Category.CategoryId == categoryId).OrderBy(p => p.ID);
-                category = _categoryRepository.GetCategoryById(categoryId).Name;
             }
-            else
+ 
+            if (category == "Pice Korisnika")
             {
-                pizzas = _repository.Pizzas.OrderBy(p => p.ID);
+                pizzas = _repository.Pizzas.Where(p => p.Category.CategoryId == categoryId && p.CreatorId ==  ).OrderBy(p => p.ID)
+                return View("UserPizzas", new PizzaListViewModel(pizzas, category));
             }
-
 
             return View(new PizzaListViewModel(pizzas, category));
         }
@@ -58,21 +70,26 @@ namespace PizzaShop.Controllers
             return View(vm);
         }
 
-        public IActionResult CreatePizza(UserPizzaViewModel model)
+        public IActionResult SavePizza(UserPizzaViewModel model)
         {
             var userCookie = Request.Cookies["User"];
             var user = JsonConvert.DeserializeObject<User>(userCookie!);
+         
             var pizza = new Pizza()
             {
                 Name = model.Name,
                 Category = _categoryRepository.GetAllCategories().FirstOrDefault(c => c.Name == "Pizze korisnika"),
                 LongDescription = model.Ingredients,
                 Price = 1500,
-                CreatorId = user!.UserId
+                CreatorId = user!.UserId,
+                ShortDescription = model.Ingredients,
+                ImageThumbnailUrl = string.Empty,
+                ImageUrl = string.Empty,
+                IsPizzaOfTheWeek = false
             };
 
-            _repository.
-            return View();
+            _repository.SavePizza(pizza);
+            return RedirectToAction("Profile", "User");
         }
     }
 }
