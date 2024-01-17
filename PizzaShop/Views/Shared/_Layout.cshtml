@@ -58,7 +58,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" style="margin-right: 500px" asp-controller="Contact" asp-action="Index">Kontakt</a>
+                            <a class="nav-link" asp-controller="Contact" asp-action="Index">Kontakt</a>
                         </li>
                         <li class="nav-item">
                             <a class="btn btn-outline-light mt-3 mt-md-0 me-2" asp-controller="Pizza" asp-action="PizzaBuilder">Kreiraj svoju pizzu</a>
@@ -66,7 +66,7 @@
                         <li class="nav-item">
                             <vc:shopping-cart-summary></vc:shopping-cart-summary>
                         </li> 
-                        <li class="nav-item d-flex flex-column flex-md-row">
+                        <li class="nav-item d-flex flex-row-reverse flex-md-row">
                             @if (!string.IsNullOrEmpty(user!.Username))
                             {
                                 <a class="btn btn-outline-light me-2 log-in-btn" style="max-width: 150px" asp-controller="User" asp-action="Profile">@user.Username</a>
@@ -99,6 +99,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
+    @await Component.InvokeAsync("Notyf")
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -13,11 +13,11 @@ namespace PizzaShop.Components.CategoryMenu
         }
         public IViewComponentResult Invoke()
         {
-            var userCookie = Request.Cookies["User"];
+            var userCookie = HttpContext!.Request.Cookies["User"];
             var categories = _categoryRepository.GetAllCategories().OrderBy(c => c.Name).ToList();
             if (userCookie == null)
             {
-                var itemToRemove = categories.Single(r => r.Name == "Pice korisnika");
+                var itemToRemove = categories.SingleOrDefault(r => r.Name == "Pice Korisnika");
                 categories.Remove(itemToRemove);
             }
             return View(categories);

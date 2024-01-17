@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PizzaShop.Models
 {
@@ -14,6 +16,8 @@ namespace PizzaShop.Models
         [Display(Name = "Sifra")]
         [Required(ErrorMessage = "Sifra je obavezna")]
         [StringLength(20, ErrorMessage = "Sifra ne sme imati vise od 20 karaktera")]
+        [RegularExpression("^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\\-__+.]){1,}).{8,}$", 
+            ErrorMessage ="Sifra mora da sadrzi od 8 do 15 karaktera, najmanje po 1 malo i veliko slovo i 1 specijalan karakter i broj")]
         public string Password { get; set; }
 
         [Display(Name = "Ime")]
@@ -52,6 +56,6 @@ namespace PizzaShop.Models
         [Required(ErrorMessage = "Broj telefona je obavezan!")]
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
-        public List<Order> Orders { get; set; }
+        public List<Order>? Orders { get; set; }
     }
 }

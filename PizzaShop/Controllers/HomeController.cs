@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Query;
 using PizzaShop.Models;
 using PizzaShop.ViewModels;
@@ -8,13 +9,12 @@ namespace PizzaShop.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private readonly IPizzaRepository _pizzaRepository;
-        public HomeController(ILogger<HomeController> logger, IPizzaRepository pizzaRepository)
+        private readonly INotyfService _notyf;
+        public HomeController(IPizzaRepository pizzaRepository, INotyfService notyf)
         {
-            _logger = logger;
             _pizzaRepository = pizzaRepository;
-
+            _notyf = notyf;
         }
 
         public IActionResult Index() 

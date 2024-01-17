@@ -1,19 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using PizzaShop.Models;
 using PizzaShop.ViewModels;
-using System.Text.Json.Serialization;
 
 namespace PizzaShop.Controllers
 {
     public class UserController : Controller
     {
         private readonly IUserRepository _userRepository;
+        private readonly INotyfService _notyf;
 
-        public UserController(IUserRepository userRepository)
+        public UserController(IUserRepository userRepository, INotyfService notyf)
         {
             _userRepository = userRepository;
-
+            _notyf = notyf;
         }
         public IActionResult Index()
         {
@@ -64,11 +65,12 @@ namespace PizzaShop.Controllers
                     var serializedUser = JsonConvert.SerializeObject(user);
                     Response.Cookies.Append("User", serializedUser, cookieOptions);
 
+                    _notyf.Success("Uspesno ste se ulogovali!");
                     return View("SignInSuccess");
                 }
             }
 
-            ModelState.AddModelError("", "Neispravni kredencijali");
+            _notyf.Error("Neispravni kredencijali");
 
             return View("Login", loginUser);
         }
@@ -82,11 +84,12 @@ namespace PizzaShop.Controllers
                 if (user == null)
                 {
                     _userRepository.CreateUser(registerUser);
+                    _notyf.Success("Registracija uspesna!");
                     return View("Success");
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Korisnicko ime " + registerUser.Username + " je zauzeto");
+                    _notyf.Error("Korisnicno ime je zauzeto!");
                     return View("Index", registerUser);
                 }
             }
@@ -102,8 +105,10 @@ namespace PizzaShop.Controllers
             {
                 Response.Cookies.Delete("User");
 
+                _notyf.Success("Uspesno ste se izlogovali!");
                 return RedirectToAction("Index", "Home");
             }
+
             else
             {
                 return RedirectToAction("Index", "Home");

@@ -28,5 +28,10 @@ namespace PizzaShop.Models
             _applicationDbContext.Pizzas.Add(pizza);
             _applicationDbContext.SaveChanges();
         }
+
+        public List<Pizza> GetUserPizzas(int userId)
+        {
+            return _applicationDbContext.Pizzas.Where(p => p.CreatorId == userId).ToList();
+        }
     }
 }
