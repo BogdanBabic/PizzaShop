@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using PizzaShop.Models;
+using PizzaShop.TagHelpers;
 using PizzaShop.ViewModels;
+using System.Reflection;
 
 namespace PizzaShop.Controllers
 {
@@ -26,9 +28,11 @@ namespace PizzaShop.Controllers
             return View(new LoginViewModel());
         }
 
+        [TypeFilter(typeof(CustomExceptionFilter))]
         public IActionResult Profile()
         {
             User user = new User();
+            throw new InvalidOperationException("Test Greska");
             var userCookie = HttpContext!.Request.Cookies["User"];
 
             if (userCookie != null)

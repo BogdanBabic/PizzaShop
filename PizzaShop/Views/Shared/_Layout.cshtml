@@ -33,7 +33,8 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark bg-primary">
             <div class="container">
-                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+
+                <a class="navbar-brand" asp-controller="home" asp-action="index">
                     <img src="~/images/pizzaLogo.png" width="30" height="30" class="d-inline-block align-top"
                          alt="IFS Picerija Logo">
                     IFS picerija
@@ -45,37 +46,36 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="nav navbar-nav mr-auto">
-                        <li class="nav-item ">
-                            <a class="nav-link active" asp-controller="Home" asp-action="Index">Početna</a>
-                        </li>
-
-                        <vc:category-menu></vc:category-menu>
-
+                    <ul class="nav navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" asp-controller="Home" asp-action="Pretplata">
+                            <a class="nav-link active" asp-controller="home" asp-action="index">Početna</a>
+                        </li>
+                        <li class="nav-item">
+                            <vc:category-menu></vc:category-menu>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " asp-controller="home" asp-action="pretplata">
                                 Pretplata
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Contact" asp-action="Index">Kontakt</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-outline-light mt-3 mt-md-0 me-2" asp-controller="Pizza" asp-action="PizzaBuilder">Kreiraj svoju pizzu</a>
+                            <a class="nav-link" asp-controller="contact" asp-action="index">Kontakt</a>
                         </li>
                         <li class="nav-item">
                             <vc:shopping-cart-summary></vc:shopping-cart-summary>
-                        </li> 
-                        <li class="nav-item d-flex flex-row-reverse flex-md-row">
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav ms-auto">
+                        <li class="nav-item d-flex flex-column flex-md-row">
                             @if (!string.IsNullOrEmpty(user!.Username))
                             {
-                                <a class="btn btn-outline-light me-2 log-in-btn" style="max-width: 150px" asp-controller="User" asp-action="Profile">@user.Username</a>
-                                <a class="btn btn-outline-light mt-3 mt-md-0 me-2" style="max-width: 150px" asp-controller="User" asp-action="Logout">Izloguj se</a>
+                                <a class="btn btn-outline-light me-2 log-in-btn" asp-controller="User" asp-action="Profile">@user.Username</a>
+                                <a class="btn btn-outline-light mt-3 mt-md-0 me-2" asp-controller="User" asp-action="Logout">Izloguj se</a>
                             }
                             else
                             {
-                                <a class="btn btn-outline-light me-2 log-in-btn" style="max-width: 150px" asp-controller="User" asp-action="Login">Uloguj se</a>
-                                <a class="btn btn-outline-light mt-3 mt-md-0" style="max-width: 150px" asp-controller="User" asp-action="Index">Registruj se</a>
+                                <a class="btn btn-outline-light me-2 log-in-btn" asp-controller="User" asp-action="Login">Uloguj se</a>
+                                <a class="btn btn-outline-light mt-3 mt-md-0" asp-controller="User" asp-action="Index">Registruj se</a>
                             }
                         </li>
                     </ul>

@@ -33,5 +33,16 @@ namespace PizzaShop.Models
         {
             return _applicationDbContext.Pizzas.Where(p => p.CreatorId == userId).ToList();
         }
+
+        public void DeletePizza(int pizzaId)
+        {
+            _applicationDbContext.Pizzas.Where(p => p.ID == pizzaId).ExecuteDelete();
+        }
+
+        public void UpdatePizza(Pizza pizza)
+        {
+            _applicationDbContext.Pizzas.Update(pizza);
+            _applicationDbContext.SaveChanges();
+        }
     }
 }

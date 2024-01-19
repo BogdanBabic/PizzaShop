@@ -1,10 +1,12 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using PizzaShop.Models;
 using PizzaShop.ViewModels;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace PizzaShop.Controllers
 {
@@ -94,7 +96,7 @@ namespace PizzaShop.Controllers
                 ModelState.AddModelError("", "Uneti sastojak ne postoji: " + string.Join(", ", disallowedWords));
                 return View("PizzaBuilder", model);
             }
-            
+
             var pizza = new Pizza()
             {
                 Name = model.Name,
@@ -120,9 +122,55 @@ namespace PizzaShop.Controllers
             var userCookie = Request.Cookies["User"];
             var user = JsonConvert.DeserializeObject<User>(userCookie!);
 
-            var vm = new PizzaManagerViewModel();
-            vm.Pizzas = _repository.GetUserPizzas(user.UserId);
+            var vm = _repository.GetUserPizzas(user!.UserId);
             return View(vm);
+        }
+
+        public IActionResult RemoveUserPizza(int pizzaId)
+        {
+
+            _repository.DeletePizza(pizzaId);
+
+            _notyf.Success("Pica obrisana!");
+
+            return RedirectToAction("Profile", "User");
+        }
+
+        public IActionResult PizzaEditor(int pizzaId)
+        {
+            var pizza = _repository.GetPizzaById(pizzaId);
+
+            PizzaManagerViewModel vm = new PizzaManagerViewModel()
+            {
+                Name = pizza.Name,
+                ID = pizza.ID
+            };
+            vm.AllowedIngredients = "Paradajz sos, Mocarela, Pecurke, Sunka, Masline, Bosiljak, Kobasica, Pavlaka, Paprika, Parmezan";
+            return View(vm);
+        }
+
+        public IActionResult EditPizza(PizzaManagerViewModel model)
+        {
+            var allowedIngredients = model.AllowedIngredients.Split(',').Select(s => s.Trim()).Select(s => s.ToLower()).ToList();
+            var ingredients = model.Ingredients.Split(',').Select(s => s.Trim()).Select(s => s.ToLower()).ToList();
+
+            var disallowedWords = ingredients.Where(word => !allowedIngredients.Contains(word)).ToList();
+
+            if (disallowedWords.Any())
+            {
+                ModelState.AddModelError("", "Uneti sastojak ne postoji: " + string.Join(", ", disallowedWords));
+                return View("PizzaBuilder", model);
+            }
+
+            var pizza = _repository.GetPizzaById(model.ID);
+
+            pizza.Name = model.Name;
+            pizza.LongDescription = string.Join(", ", ingredients);
+
+            _repository.UpdatePizza(pizza);
+
+            _notyf.Success("Izmene napravljene");
+            return RedirectToAction("Profile", "User");
         }
     }
 }

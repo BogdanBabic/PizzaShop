@@ -38,5 +38,20 @@ namespace PizzaShop.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult TestAction(int? id)
+        {
+            if (id == 1)
+            {
+                throw new Exception("File Not Found");
+            }
+
+            else if ( id == 2)
+            {
+                return StatusCode(500);
+            }
+
+            return View();
+        }
     }
 }

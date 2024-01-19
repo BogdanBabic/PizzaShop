@@ -1,0 +1,10 @@
+﻿<div>
+    <h2>
+        Desila se greska!
+    </h2>
+
+    @{
+        var p = (Exception)ViewData["Exception obj"];
+    }
+    <p>Ovo je nas @p.Message</p>
+</div>

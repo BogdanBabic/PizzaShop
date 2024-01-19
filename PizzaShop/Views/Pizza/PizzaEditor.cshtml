@@ -1,9 +1,9 @@
 ﻿@using PizzaShop.ViewModels
-@model UserPizzaViewModel
+@model PizzaManagerViewModel
 
-<h3 class="d-flex justify-content-center mt-5">Kreirajte vasu sopstvenu pizzu!</h3>
+<h3 class="d-flex justify-content-center mt-5">Izmenite @Model.Name</h3>
 
-<form asp-controller="Pizza" asp-action="SavePizza" method="post" role="form">
+<form asp-controller="Pizza" asp-action="EditPizza" asp-route-id="@Model.ID" method="post" role="form">
     <h4 class="my-5">
         Unesite neke od ponudjenih sastojaka
     </h4>
@@ -25,10 +25,10 @@
             <p>
                 @Model.AllowedIngredients
             </p>
-            
+
             <div class="mt-3">
                 <div class="col-md-offset-2 col-md-5">
-                    <input type="submit" class="btn btn-secondary" value="Napravi picu!" />
+                    <input type="submit" class="btn btn-secondary" value="Potvrdi izmene" />
                 </div>
             </div>
         </div>
