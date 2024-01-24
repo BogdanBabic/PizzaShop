@@ -59,7 +59,7 @@ namespace PizzaShop.Controllers
             return View(new PizzaListViewModel(pizzas, category));
         }
 
-    public ViewResult Details(int id)
+        public ViewResult Details(int id)
         {
             Pizza p = _repository.GetPizzaById(id);
 
@@ -114,7 +114,7 @@ namespace PizzaShop.Controllers
 
             _notyf.Success("Uspesno ste kreirali svoju picu!");
 
-            return RedirectToAction("Profile", "User");
+            return RedirectToAction("PizzaManager", "Pizza");
         }
 
         public IActionResult PizzaManager()
@@ -133,7 +133,7 @@ namespace PizzaShop.Controllers
 
             _notyf.Success("Pica obrisana!");
 
-            return RedirectToAction("Profile", "User");
+            return RedirectToAction("PizzaManager", "Pizza");
         }
 
         public IActionResult PizzaEditor(int pizzaId)
@@ -143,9 +143,10 @@ namespace PizzaShop.Controllers
             PizzaManagerViewModel vm = new PizzaManagerViewModel()
             {
                 Name = pizza.Name,
-                ID = pizza.ID
+                ID = pizza.ID,
+                Ingredients = pizza.LongDescription,
+                AllowedIngredients = "Paradajz sos, Mocarela, Pecurke, Sunka, Masline, Bosiljak, Kobasica, Pavlaka, Paprika, Parmezan"
             };
-            vm.AllowedIngredients = "Paradajz sos, Mocarela, Pecurke, Sunka, Masline, Bosiljak, Kobasica, Pavlaka, Paprika, Parmezan";
             return View(vm);
         }
 
@@ -170,7 +171,7 @@ namespace PizzaShop.Controllers
             _repository.UpdatePizza(pizza);
 
             _notyf.Success("Izmene napravljene");
-            return RedirectToAction("Profile", "User");
+            return RedirectToAction("PizzaManager", "Pizza");
         }
     }
 }

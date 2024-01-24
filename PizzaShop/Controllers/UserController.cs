@@ -28,11 +28,11 @@ namespace PizzaShop.Controllers
             return View(new LoginViewModel());
         }
 
-        [TypeFilter(typeof(CustomExceptionFilter))]
+        [TypeFilter(typeof(UserExceptionFilter))]
         public IActionResult Profile()
         {
             User user = new User();
-            throw new InvalidOperationException("Test Greska");
+            throw new Exception("Test Greska");
             var userCookie = HttpContext!.Request.Cookies["User"];
 
             if (userCookie != null)
